@@ -1,0 +1,95 @@
+class BusTicketManagementSystem:
+    def __init__(self):
+        self.passenger_queue = []
+        self.max_seats = 50
+        
+    def book_ticket(self):
+        if len(self.passenger_queue) >= self.max_seats:
+            print("Sorry, all seats are occupied.")
+            return
+        
+        name = input("Enter passenger name: ")
+        seat_number = len(self.passenger_queue) + 1
+        self.passenger_queue.append((name, seat_number))
+        print(f"Ticket booked for {name}. Seat number: {seat_number}")
+        
+    def display_passenger_information(self):
+        if len(self.passenger_queue) == 0:
+            print("No passengers in the system.")
+            return
+        
+        print("Passenger Information:")
+        for passenger in self.passenger_queue:
+            name, seat_number = passenger
+            print(f"Seat number: {seat_number}, Passenger name: {name}")
+        
+    def delete_passenger_by_name(self):
+        if len(self.passenger_queue) == 0:
+            print("No passengers in the system.")
+            return
+        
+        name = input("Enter passenger name to delete: ")
+        found = False
+        for passenger in self.passenger_queue:
+            if passenger[0] == name:
+                self.passenger_queue.remove(passenger)
+                found = True
+                break
+        
+        if found:
+            print(f"{name} has been removed from the system.")
+        else:
+            print(f"No passenger found with the name {name}.")
+        
+    def delete_passenger_by_seat_number(self):
+        if len(self.passenger_queue) == 0:
+            print("No passengers in the system.")
+            return
+        
+        seat_number = int(input("Enter seat number to delete: "))
+        found = False
+        for passenger in self.passenger_queue:
+            if passenger[1] == seat_number:
+                self.passenger_queue.remove(passenger)
+                found = True
+                break
+        
+        if found:
+            print(f"Passenger with seat number {seat_number} has been removed from the system.")
+        else:
+            print(f"No passenger found with seat number {seat_number}.")
+        
+    def run(self):
+        while True:
+            print("\nBus Ticket Management System")
+            print("1. Book Ticket")
+            print("2. Ticket Management")
+            print("3. Exit")
+            choice = input("Enter your choice: ")
+            
+            if choice == '1':
+                self.book_ticket()
+            elif choice == '2':
+                print("\nTicket Management")
+                print("1. Display Passenger Information")
+                print("2. Delete Passenger by Name")
+                print("3. Delete Passenger by Seat Number")
+                sub_choice = input("Enter your choice: ")
+                
+                if sub_choice == '1':
+                    self.display_passenger_information()
+                elif sub_choice == '2':
+                    self.delete_passenger_by_name()
+                elif sub_choice == '3':
+                    self.delete_passenger_by_seat_number()
+                else:
+                    print("Invalid choice.")
+            elif choice == '3':
+                print("Exiting the program.")
+                break
+            else:
+                print("Invalid choice.")
+
+# Run the bus ticket management system
+ticket_system = BusTicketManagementSystem()
+ticket_system.run()
